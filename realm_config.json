@@ -1,0 +1,8 @@
+{
+    "app_id": "freelancer-rv-app-vffgg",
+    "config_version": 20210101,
+    "name": "freelancer-rv-app",
+    "location": "IE",
+    "provider_region": "aws-eu-west-2",
+    "deployment_model": "LOCAL"
+}
