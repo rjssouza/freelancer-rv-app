@@ -2,19 +2,6 @@ const _ = require('lodash');
 const { main, getDatabase } = require('../init');
 const fnAddEmployee = require('../functions/fn_add_employee');
 
-// const fs = require('fs');
-
-// // relative path to the file
-// const filePath = '../CertidaoResidenteNaoHabitual.pdf';
-
-// // reusable arrow function to encode file data to base64 encoded string
-// const convertBase64 = (path) => {
-//   // read binary data from file
-//   const bitmap = fs.readFileSync(path);
-//   // convert the binary data to base64 encoded string
-//   return bitmap.toString('base64');
-// };
-
 main(async () => {
   const colaborador = {
     nomeCompleto: 'Robson Jesus de Souza',
@@ -50,7 +37,9 @@ main(async () => {
     }
   };
 
-  await fnAddEmployee({ query: null, headers: null, body: {
-    text: () => JSON.stringify(colaborador)
-  } }, null);
+  await fnAddEmployee({
+    query: null, headers: null, body: {
+      text: () => JSON.stringify(colaborador)
+    }
+  }, null);
 });

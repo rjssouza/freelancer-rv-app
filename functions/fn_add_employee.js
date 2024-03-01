@@ -1,50 +1,6 @@
 const _ = require('lodash');
-const v8n = require("v8n");
 
-const validar = (dictionary = []) => {
-  function isDateValid() {
-    return value => !isNaN(new Date(value));
-  }
-
-  v8n.extend({ isDateValid });
-
-  return {
-    isRequired: (value, propriedade) => isRequired(value, propriedade, dictionary),
-    isValidDate: (value, propriedade) => isValidDate(value, propriedade, dictionary),
-    finalize: () => {
-      dictionary.forEach((test) => {
-        test();
-      })
-    }
-  }
-}
-
-const isRequired = (nome, propriedade, dictionary) => {
-  const test = () => v8n()
-    .string()
-    .testAsync(nome)
-    .catch(ex => {
-      throw Error(`O campo ${propriedade} é obrigatório`)
-    });
-
-  dictionary.push(test);
-
-  return validar(dictionary);
-};
-
-const isValidDate = (nome, propriedade, dictionary) => {
-  const test = () => v8n()
-    .string()
-    .isDateValid()
-    .testAsync(nome)
-    .catch(ex => {
-      throw Error(`O campo ${propriedade} é uma data inválida`)
-    });
-
-  dictionary.push(test);
-
-  return validar(dictionary);
-};
+const validate = () => context.functions.execute('fn_validate');
 
 const getDatabase = (dbCollection) => context.functions.execute('fn_get_database', dbCollection);
 
@@ -53,8 +9,10 @@ const addEmployee = async ({ query, headers, body }, response) => {
   const colaborador = JSON.parse(body.text());
   info("Request:", colaborador);
 
-  validar()
+  const validation = await validate();
+  validation
     .isRequired(colaborador.nomeCompleto, "nome completo")
+    .isRequired(colaborador.dataNascimento, "data nascimento")
     .isValidDate(colaborador.dataNascimento, "data nascimento")
     .finalize();
 
