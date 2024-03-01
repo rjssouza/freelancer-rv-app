@@ -1,13 +1,13 @@
 const _ = require('lodash');
 const v8n = require("v8n");
 
-function isDateValid() {
-  return value => !isNaN(new Date(value));
-}
-
-v8n.extend({ isDateValid });
-
 const validar = (dictionary = []) => {
+  function isDateValid() {
+    return value => !isNaN(new Date(value));
+  }
+
+  v8n.extend({ isDateValid });
+
   return {
     isRequired: (value, propriedade) => isRequired(value, propriedade, dictionary),
     isValidDate: (value, propriedade) => isValidDate(value, propriedade, dictionary),
