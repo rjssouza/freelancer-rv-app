@@ -50,5 +50,7 @@ main(async () => {
     }
   };
 
-  await fnAddEmployee({ query: null, headers: null, body: colaborador }, null);
+  await fnAddEmployee({ query: null, headers: null, body: {
+    text: () => JSON.stringify(colaborador)
+  } }, null);
 });

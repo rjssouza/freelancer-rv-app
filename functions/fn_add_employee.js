@@ -11,16 +11,16 @@ const validarNome = (nome) => {
     .minLength(3)
     .testAsync(nome)
     .catch(ex => {
-      debugger;
+      throw Error('nome é obrigatório');
     });
 };
 
 const getDatabase = (dbCollection) => context.functions.execute('fn_get_database', dbCollection);
 
 const addEmployee = async ({ query, headers, body }, response) => {
-  debugger;
   const dbColaboradores = await getDatabase('colaboradores');
   const colaborador = JSON.parse(body.text());
+  debugger;
   info("Request:", colaborador);
   validar(colaborador);
   const id = await dbColaboradores.findOneAndUpdate(
