@@ -1,12 +1,17 @@
 [
     {
+        "name": "fn_handler",
+        "private": true,
+        "run_as_system": true
+    },
+    {
         "name": "fn_get_database",
         "private": false,
         "run_as_system": true
     },
     {
-        "name": "fn_handler",
-        "private": true,
-        "run_as_system": true
+        "name": "fn_add_employee",
+        "private": false,
+        "disable_arg_logs": true
     }
 ]
