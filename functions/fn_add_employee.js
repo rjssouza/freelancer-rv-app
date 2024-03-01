@@ -1,18 +1,49 @@
 const _ = require('lodash');
 const v8n = require("v8n");
 
-const validar = (colaborador) => {
-  validarNome(colaborador.nome);
+function isDateValid() {
+  return value => !isNaN(new Date(value));
 }
 
-const validarNome = (nome) => {
-  return v8n()
-    .string()
-    .minLength(3)
-    .testAsync(nome)
-    .catch(ex => {
-      throw Error('nome é obrigatório');
-    });
+v8n.extend({ isDateValid });
+
+const validar = (dictionary = []) => {
+  return {
+    isRequired: (value, propriedade) => isRequired(value, propriedade, dictionary),
+    isValidDate: (value, propriedade) => isValidDate(value, propriedade, dictionary),
+    finalize: () => {
+      dictionary.forEach((test) => {
+        test();
+      })
+    }
+  }
+}
+
+const isRequired = (nome, propriedade, dictionary) => {
+  const test = () => v8n()
+  .string()
+  .testAsync(nome)
+  .catch(ex => {
+    throw Error(`O campo ${propriedade} é obrigatório`)
+  });
+
+  dictionary.push(test);
+
+  return validar(dictionary);
+};
+
+const isValidDate = (nome, propriedade, dictionary) => {
+  const test = () => v8n()
+  .string()
+  .isDateValid()
+  .testAsync(nome)
+  .catch(ex => {
+    throw Error(`O campo ${propriedade} é uma data inválida`)
+  });
+
+  dictionary.push(test);
+
+  return validar(dictionary);
 };
 
 const getDatabase = (dbCollection) => context.functions.execute('fn_get_database', dbCollection);
@@ -20,9 +51,13 @@ const getDatabase = (dbCollection) => context.functions.execute('fn_get_database
 const addEmployee = async ({ query, headers, body }, response) => {
   const dbColaboradores = await getDatabase('colaboradores');
   const colaborador = JSON.parse(body.text());
-  debugger;
   info("Request:", colaborador);
-  validar(colaborador);
+
+  validar()
+    .isRequired(colaborador.nomeCompleto, "nome completo")
+    .isValidDate(colaborador.dataNascimento, "data nascimento")
+    .finalize();
+  
   const id = await dbColaboradores.findOneAndUpdate(
     { nomeCompleto: "Robson Jesus de Souza" },
     { $set: colaborador },
