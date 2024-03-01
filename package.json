@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "tshirt": "node . --env=local --fn=tshirt \"{\\\"name\\\": \\\"teste\\\"}\"",
+        "f_clear_table": "node ./tasks/f_clear_table.task.js",
         "test": "jest --runInBand --detectOpenHandles --forceExit"
     },
     "dependencies": {
