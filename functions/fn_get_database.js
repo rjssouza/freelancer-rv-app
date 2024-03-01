@@ -25,13 +25,13 @@ async function getDatabase(dbCollection) {
 
 async function main(dbCollection) {
   return global.context.functions.execute(
-    'f_handler',
+    'fn_handler',
     getDatabase,
     dbCollection
   );
 }
 
-// f_get_database
+// fn_get_database
 exports = main;
 
 if (typeof module !== 'undefined') {

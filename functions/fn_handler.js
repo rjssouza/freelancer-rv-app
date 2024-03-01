@@ -22,7 +22,7 @@ const allowedRetryFunctions = [
 ];
 
 async function getDatabase(dbCollection) {
-  return global.context.functions.execute('f_get_database', dbCollection);
+  return global.context.functions.execute('fn_get_database', dbCollection);
 }
 
 async function getLastNotification(content) {

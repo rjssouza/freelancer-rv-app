@@ -1,8 +1,8 @@
 require('../init');
-const fHandler = require('../../functions/f_handler');
+const fnHandler = require('../../functions/fn_handler');
 
 // npm test -- ./test/unit/f_handler.test.js
-describe('f_handler', () => {
+describe('fn_handler', () => {
   const objTeste = {
     name: 'test',
   };
@@ -10,7 +10,7 @@ describe('f_handler', () => {
   it('Chamar função genérica por meio do interceptador', async () => {
     const triggerProcessReqDataRequests = jest.fn(async (obj) => obj);
 
-    const handler = jest.fn(async (obj) => fHandler(triggerProcessReqDataRequests, obj));
+    const handler = jest.fn(async (obj) => fnHandler(triggerProcessReqDataRequests, obj));
     const result = await handler(objTeste);
 
     expect(triggerProcessReqDataRequests).toHaveBeenCalled();
@@ -22,7 +22,7 @@ describe('f_handler', () => {
     const triggerProcessReqDataRequests = jest.fn(() => {
       throw new Error('Error test');
     });
-    jest.fn((obj) => fHandler(triggerProcessReqDataRequests, obj));
+    jest.fn((obj) => fnHandler(triggerProcessReqDataRequests, obj));
 
     expect(triggerProcessReqDataRequests).toThrow();
     expect(triggerProcessReqDataRequests).toHaveBeenCalled();

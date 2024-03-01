@@ -2,7 +2,7 @@ const { bootstrap } = require('../init');
 
 const LOG_NOTIFICATIONS = 'log_notifications';
 
-// npm test -- ./test/unit/f_get_database.test.js
+// npm test -- ./test/unit/fn_get_database.test.js
 const fnDescription = (action) => {
   it('Deve retornar collection', async () => {
     const handler = jest.fn(action);
@@ -13,4 +13,4 @@ const fnDescription = (action) => {
   });
 };
 
-bootstrap('f_get_database', fnDescription, LOG_NOTIFICATIONS);
+bootstrap('fn_get_database', fnDescription, LOG_NOTIFICATIONS);

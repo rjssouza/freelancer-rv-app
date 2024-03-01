@@ -113,7 +113,7 @@ function mockBasicFunctions(fn, fnExecution) {
 
 function mockGetDatabase() {
   const fGetDatabase = mockBasicFunctions(
-    'f_get_database',
+    'fn_get_database',
     async (dbCollection) => {
       const serviceName = context.environment.tag === 'production'
         ? 'mongodb-atlas'
@@ -135,7 +135,7 @@ function mockGetDatabase() {
 
 function mockGetDatabaseRead() {
   const fGetDatabase = mockBasicFunctions(
-    'f_get_database',
+    'fn_get_database',
     async (dbCollection) => {
       const serviceName = context.environment.tag === 'production'
         ? 'mongodb-atlas'
@@ -163,8 +163,8 @@ function mockGetDatabaseRead() {
 
 const functionMocks = {
   mockBasicFunctions,
-  f_get_database: mockGetDatabase,
-  f_handler: () => mockBasicFunctions('f_handler'),
+  fn_get_database: mockGetDatabase,
+  f_handler: () => mockBasicFunctions('fn_handler'),
 };
 
 const bootstrap = (fnName, fnDescription, ...argArray) => {
@@ -190,7 +190,7 @@ const bootstrapDatabase = (fnName, fnDescription, ...argArray) => {
   const fnn = (action) => {
     fnDescription(action);
 
-    it('Deve chamar a f_get_database', async () => {
+    it('Deve chamar a fn_get_database', async () => {
       const httpMock = jest.fn(() => ({ statusCode: 200 }));
       global.context.http.post = httpMock;
 
@@ -205,7 +205,7 @@ const bootstrapDatabase = (fnName, fnDescription, ...argArray) => {
   bootstrap(fnName, fnn, argArray);
 };
 
-const getDatabase = async (dbCollection) => context.functions.execute('f_get_database', dbCollection);
+const getDatabase = async (dbCollection) => context.functions.execute('fn_get_database', dbCollection);
 
 module.exports = {
   executeInternal,

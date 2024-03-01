@@ -32,7 +32,7 @@ const main = async (fn) => {
 
 const functions = {
   execute,
-  f_get_database: require('./functions/f_get_database'),
+  fn_get_database: require('./functions/fn_get_database'),
 };
 const { values } = _env === 'local'
   ? require('./environments/no-environment.json')
@@ -84,7 +84,7 @@ global.context = {
   },
 };
 
-const getDatabase = async (dbCollection) => functions.execute('f_get_database', dbCollection);
+const getDatabase = async (dbCollection) => functions.execute('fn_get_database', dbCollection);
 
 const getResultsFromAggregate = async (collectionName, aggregate) => {
   const collection = await getDatabase(collectionName);
