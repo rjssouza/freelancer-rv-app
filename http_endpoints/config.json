@@ -4,7 +4,7 @@
         "http_method": "POST",
         "function_name": "fn_add_employee",
         "validation_method": "SECRET_AS_QUERY_PARAM",
-        "secret_name": "api",
+        "secret_name": "api_secret",
         "respond_result": false,
         "fetch_custom_user_data": false,
         "create_user_on_auth": false,
