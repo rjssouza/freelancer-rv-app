@@ -1,16 +1,11 @@
 [
     {
-        "name": "fn_index",
-        "private": false,
-        "disable_arg_logs": true
-    },
-    {
-        "name": "fn_get_database",
+        "name": "f_get_database",
         "private": false,
         "run_as_system": true
     },
     {
-        "name": "fn_handler",
+        "name": "f_handler",
         "private": true,
         "run_as_system": true
     }
