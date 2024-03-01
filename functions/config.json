@@ -1,11 +1,11 @@
 [
     {
-        "name": "f_get_database",
+        "name": "fn_get_database",
         "private": false,
         "run_as_system": true
     },
     {
-        "name": "f_handler",
+        "name": "fn_handler",
         "private": true,
         "run_as_system": true
     }
