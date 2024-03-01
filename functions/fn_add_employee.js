@@ -21,11 +21,11 @@ const validar = (dictionary = []) => {
 
 const isRequired = (nome, propriedade, dictionary) => {
   const test = () => v8n()
-  .string()
-  .testAsync(nome)
-  .catch(ex => {
-    throw Error(`O campo ${propriedade} é obrigatório`)
-  });
+    .string()
+    .testAsync(nome)
+    .catch(ex => {
+      throw Error(`O campo ${propriedade} é obrigatório`)
+    });
 
   dictionary.push(test);
 
@@ -34,12 +34,12 @@ const isRequired = (nome, propriedade, dictionary) => {
 
 const isValidDate = (nome, propriedade, dictionary) => {
   const test = () => v8n()
-  .string()
-  .isDateValid()
-  .testAsync(nome)
-  .catch(ex => {
-    throw Error(`O campo ${propriedade} é uma data inválida`)
-  });
+    .string()
+    .isDateValid()
+    .testAsync(nome)
+    .catch(ex => {
+      throw Error(`O campo ${propriedade} é uma data inválida`)
+    });
 
   dictionary.push(test);
 
@@ -57,7 +57,7 @@ const addEmployee = async ({ query, headers, body }, response) => {
     .isRequired(colaborador.nomeCompleto, "nome completo")
     .isValidDate(colaborador.dataNascimento, "data nascimento")
     .finalize();
-  
+
   const id = await dbColaboradores.findOneAndUpdate(
     { nomeCompleto: "Robson Jesus de Souza" },
     { $set: colaborador },
