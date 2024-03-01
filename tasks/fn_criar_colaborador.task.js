@@ -38,7 +38,6 @@ main(async () => {
     residenteNaoHabitual: {
       dataEmissao: new Date(),
       numeroPedido: 'IRNH000086480',
-      certidao: certidao
     },
     contrato: {
       dataInicio: new Date(),

@@ -19,7 +19,7 @@ const addEmployee = ({ query, headers, body}, response) => {
 
     // Raw request body (if the client sent one).
     // This is a binary object that can be accessed as a string using .text()
-    const reqBody = body;
+    const reqBody = JSON.stringify(body);
 
     console.log("arg1, arg2: ", arg1, arg2);
     console.log("Content-Type:", JSON.stringify(contentTypes));
