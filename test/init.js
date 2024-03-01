@@ -46,11 +46,7 @@ beforeAll(async () => {
     },
     {
       nome: 'development-mongodb-atlas',
-      url: 'mongodb+srv://robson:vGBwkwJHdx71knjN@mongodb-mdm-dev.ceszd.mongodb.net/?retryWrites=true&w=majority',
-    },
-    {
-      nome: 'qa-mongodb-atlas',
-      url: 'mongodb+srv://robson:vGBwkwJHdx71knjN@mongodb-mdm-tst.ceszd.mongodb.net/?retryWrites=true&w=majority',
+      url: 'mongodb+srv://dev:ZUZHktWkuNUu8rCR@freelancer-rv-db.dhb3chk.mongodb.net/?retryWrites=true&w=majority&appName=freelancer-rv-db',
     },
   ];
   global.context = {
