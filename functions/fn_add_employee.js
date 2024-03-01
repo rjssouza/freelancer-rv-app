@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const { main, getDatabase } = require('../init');
+const { getDatabase } = require('../init');
 const v8n = require("v8n");
 
 const validar = (colaborador) => {
