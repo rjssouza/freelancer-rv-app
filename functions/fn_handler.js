@@ -2,66 +2,6 @@ const winston = require('winston');
 const _ = require('lodash');
 const moment = require('moment-timezone');
 
-const TOPIC_REPROCESS_FN = 'reprocess_function';
-const LOG_NOTIFICATIONS = 'log_notifications';
-
-function getIdFromTrigger(argumentsList) {
-  return argumentsList[0].fullDocument._id;
-}
-
-const allowedRetryFunctions = [
-  {
-    name: 'Trigger_Process_req_data_requests',
-  },
-  {
-    name: 'Trigger_mmd_activation_lake',
-  },
-  {
-    name: 'Trigger_mdm_measures_lake',
-  },
-];
-
-async function getDatabase(dbCollection) {
-  return global.context.functions.execute('fn_get_database', dbCollection);
-}
-
-async function getLastNotification(content) {
-  const collection = await getDatabase(LOG_NOTIFICATIONS);
-  const notification = await collection.findOne({
-    'content._id': content._id,
-    topic: TOPIC_REPROCESS_FN,
-    'content.fnName': content.fnName,
-  });
-
-  return notification;
-}
-
-async function saveLogNotification(content) {
-  const notification = await getLastNotification(content);
-  if (notification) return;
-
-  await global.context.functions.execute(
-    'f_create_log_notification',
-    TOPIC_REPROCESS_FN,
-    content
-  );
-}
-
-async function createReprocessingLog(target, thisArg, argumentsList) {
-  const retryFn = _.find(
-    allowedRetryFunctions,
-    (args) => args.name === target.name
-  );
-  if (!retryFn) return;
-
-  const id = getIdFromTrigger(argumentsList);
-  await saveLogNotification({
-    _id: id,
-    fnName: retryFn.name,
-    args: argumentsList,
-  });
-}
-
 const handler = {
   async apply(target, thisArg, argumentsList) {
     try {
@@ -69,7 +9,6 @@ const handler = {
       return await target(...argumentsList);
     } catch (err) {
       global.error(`Exception occurred while executing function: ${err}`);
-      await createReprocessingLog(target, thisArg, argumentsList);
       throw err;
     }
   },
@@ -117,8 +56,7 @@ function bootstrapLogger(fn) {
 }
 
 function boostrapTimezone() {
-  moment.tz.setDefault('Etc/GMT+0');
-  // moment.tz.setDefault("Europe/Lisbon");
+  moment.tz.setDefault("Europe/Lisbon");
 }
 
 async function main(fn, ...args) {
@@ -129,7 +67,7 @@ async function main(fn, ...args) {
   return proxy(...args);
 }
 
-// f_create_log_notification
+// fn_handler
 exports = main;
 
 if (typeof module !== 'undefined') {

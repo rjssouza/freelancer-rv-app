@@ -1,4 +1,13 @@
-// This function is the endpoint's request handler.
+const v8n = require("v8n");
+
+const validar = (colaborador) => {
+  validarNome(colaborador.nome);
+}
+
+const validarNome = (nome) => {
+  return v8n().string().minLength(3).check(nome);
+};
+
 const addEmployee = ({ query, headers, body}, response) => {
     // Data can be extracted from the request as follows:
 
@@ -28,6 +37,7 @@ const addEmployee = ({ query, headers, body}, response) => {
 
     // The return value of the function is sent as the response back to the client
     // when the "Respond with Result" setting is set.
+
     return  "Hello World!";
 };
 
@@ -39,7 +49,7 @@ async function main({ query, headers, body}, response) {
   );
 }
 
-// fn_get_database
+// fn_add_employee
 exports = main;
 
 if (typeof module !== 'undefined') {
