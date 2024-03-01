@@ -32,19 +32,7 @@ const main = async (fn) => {
 
 const functions = {
   execute,
-  f_create_log_notification: require('./functions/f_create_log_notification'),
   f_get_database: require('./functions/f_get_database'),
-  f_meter_installation: require('./functions/f_meter_installation'),
-  f_reset_database: require('./functions/f_reset_database'),
-  Http_Create_Measure_Dummy: require('./functions/Http_Create_Measure_Dummy'),
-  Http_get_measures_data: require('./functions/Http_get_measures_data'),
-  Trigger_log_notifications: require('./functions/Trigger_log_notifications'),
-  Trigger_mdm_measures_lake: require('./functions/Trigger_mdm_measures_lake'),
-  Trigger_mmd_activation_lake: require('./functions/Trigger_mmd_activation_lake'),
-  Trigger_Process_log_notifications: require('./functions/Trigger_Process_log_notifications'),
-  Trigger_Process_req_data_requests: require('./functions/Trigger_Process_req_data_requests'),
-  Trigger_req_data_request: require('./functions/Trigger_req_data_request'),
-  Trigger_Schedule_log_notifications: require('./functions/Trigger_Schedule_log_notifications'),
 };
 const { values } = _env === 'local'
   ? require('./environments/no-environment.json')
@@ -52,24 +40,8 @@ const { values } = _env === 'local'
 
 const services = [
   {
-    nome: 'test-mongodb-atlas',
-    url: 'mongodb+srv://robson:vGBwkwJHdx71knjN@mongodb-mdm-tst.ceszd.mongodb.net/?retryWrites=true&w=majority',
-  },
-  {
     nome: 'development-mongodb-atlas',
-    url: 'mongodb+srv://robson:vGBwkwJHdx71knjN@mongodb-mdm-dev.ceszd.mongodb.net/?retryWrites=true&w=majority',
-  },
-  {
-    nome: 'qa-mongodb-atlas',
-    url: 'mongodb+srv://robson:vGBwkwJHdx71knjN@mongodb-mdm-tst.ceszd.mongodb.net/?retryWrites=true&w=majority',
-  },
-  {
-    nome: 'mongodb-atlas',
-    url: 'mongodb+srv://robson:vGBwkwJHdx71knjN@mongodb-mdm-prd.ceszd.mongodb.net/?retryWrites=true&w=majority',
-  },
-  {
-    nome: 'local-mongodb-atlas',
-    url: 'mongodb://localhost:27017/',
+    url: 'mongodb+srv://dev:ZUZHktWkuNUu8rCR@freelancer-rv-db.dhb3chk.mongodb.net/?retryWrites=true&w=majority&appName=freelancer-rv-db',
   },
 ];
 
