@@ -12,32 +12,32 @@ const validarNome = (nome) => {
     .testAsync(nome)
     .catch(ex => {
       debugger;
-     });
+    });
 };
 
 const getDatabase = (dbCollection) => context.functions.execute('fn_get_database', dbCollection);
 
-const addEmployee = async ({ query, headers, body}, response) => {
+const addEmployee = async ({ query, headers, body }, response) => {
   debugger;
-    const dbColaboradores = await getDatabase('colaboradores');
-    const colaborador = JSON.parse(body.text());
-    info("Request:", colaborador);
-    validar(colaborador);
-    const id = await dbColaboradores.findOneAndUpdate(
-      { nomeCompleto: "Robson Jesus de Souza" },
-      { $set: colaborador },
-      { upsert: true, returnDocument: 'after', returnNewDocument: true }
-    );
-    info("Request body:", id);
+  const dbColaboradores = await getDatabase('colaboradores');
+  const colaborador = JSON.parse(body.text());
+  info("Request:", colaborador);
+  validar(colaborador);
+  const id = await dbColaboradores.findOneAndUpdate(
+    { nomeCompleto: "Robson Jesus de Souza" },
+    { $set: colaborador },
+    { upsert: true, returnDocument: 'after', returnNewDocument: true }
+  );
+  info("Request body:", id);
 
-    return id;
+  return id;
 };
 
-async function main({ query, headers, body}, response) {
+async function main({ query, headers, body }, response) {
   return global.context.functions.execute(
     'fn_handler',
     addEmployee,
-    { query, headers, body}, response
+    { query, headers, body }, response
   );
 }
 
