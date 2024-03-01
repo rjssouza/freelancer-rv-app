@@ -6,12 +6,19 @@ const validar = (colaborador) => {
 }
 
 const validarNome = (nome) => {
-  return v8n().string().minLength(3).check(nome);
+  return v8n()
+    .string()
+    .minLength(3)
+    .testAsync(nome)
+    .catch(ex => {
+      debugger;
+     });
 };
 
 const getDatabase = (dbCollection) => context.functions.execute('fn_get_database', dbCollection);
 
 const addEmployee = async ({ query, headers, body}, response) => {
+  debugger;
     const dbColaboradores = await getDatabase('colaboradores');
     const colaborador = JSON.parse(body.text());
     info("Request:", colaborador);

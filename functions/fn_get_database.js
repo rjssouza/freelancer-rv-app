@@ -13,7 +13,7 @@ async function getDatabase(dbCollection) {
     collection = {
       name: dbCollection,
       col: global.context.services
-        .get(POSFIX)
+        .get(serviceName)
         .db(dbName)
         .collection(dbCollection),
     };
