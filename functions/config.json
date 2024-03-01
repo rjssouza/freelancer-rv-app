@@ -10,7 +10,7 @@
         "run_as_system": true
     },
     {
-        "name": "f_handler",
+        "name": "fn_handler",
         "private": true,
         "run_as_system": true
     }
