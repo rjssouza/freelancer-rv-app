@@ -1,5 +1,4 @@
 const _ = require('lodash');
-const { getDatabase } = require('../init');
 const v8n = require("v8n");
 
 const validar = (colaborador) => {
@@ -9,6 +8,8 @@ const validar = (colaborador) => {
 const validarNome = (nome) => {
   return v8n().string().minLength(3).check(nome);
 };
+
+const getDatabase = (dbCollection) => functions.execute('fn_get_database', dbCollection);
 
 const addEmployee = async ({ query, headers, body}, response) => {
     const dbColaboradores = await getDatabase('colaboradores');
