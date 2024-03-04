@@ -14,9 +14,13 @@ const removeEmployee = async ({ query, headers, body }, response) => {
     .finalize();
   const dbEmployee = await getDatabase('colaboradores');
   const cursor = await getEmployee(id);
-  cursor.forEach((element) => dbEmployee.deleteOne({ _id: element._id }));
-  debug(`Colaborador de id: ${id} deletado com sucesso`)
-  return true;
+  if (cursor.length <= 0)
+    return false;
+
+  const employee = cursor[0];
+  debug(`Colaborador de id: ${id} deletado com sucesso`);
+
+  return dbEmployee.deleteOne({ _id: employee?._id });
 };
 
 async function main({ query, headers, body }, response) {
