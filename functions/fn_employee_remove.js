@@ -4,6 +4,11 @@ const getDatabase = (dbCollection) => context.functions.execute('fn_get_database
 
 const removeEmployee = async ({ query, headers, body }, response) => {
   const { id } = query;
+  const validation = await validate();
+  validation
+    .isRequired(id, 'id')
+    .finalize();
+
   const agg = [
     {
       $addFields: {
@@ -22,13 +27,11 @@ const removeEmployee = async ({ query, headers, body }, response) => {
   ];
 
   const dbEmployee = await getDatabase('colaboradores');
-  const validation = await validate();
-  validation
-    .isRequired(id, 'id')
-    .finalize();
   const cursor = await dbEmployee.aggregate(agg).toArray();
 
   cursor.forEach((element) => dbEmployee.deleteOne({ _id: element._id }));
+
+  return true;
 };
 
 async function main({ query, headers, body }, response) {
