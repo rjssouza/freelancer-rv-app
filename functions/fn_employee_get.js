@@ -3,7 +3,7 @@ const validate = () => context.functions.execute('fn_validate');
 const validateFilter = async (employeeName, id, headers) => {
   debug('Header', headers);
 
-  if (headers.Listall[0] === 'true') {
+  if (headers.Listall[0] !== 'true') {
     const validation = await validate();
     validation
       .conditionalRequired(id, employeeName, 'filtro')
