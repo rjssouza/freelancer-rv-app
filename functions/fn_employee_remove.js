@@ -20,7 +20,7 @@ const removeEmployee = async ({ query, headers, body }, response) => {
   const employee = cursor[0];
   debug(`Colaborador de id: ${id} deletado com sucesso`);
 
-  return dbEmployee.deleteOne({ _id: employee?._id });
+  return dbEmployee.deleteOne({ _id: employee._id });
 };
 
 async function main({ query, headers, body }, response) {
