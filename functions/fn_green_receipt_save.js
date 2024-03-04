@@ -20,9 +20,9 @@ const getEmployee = async (idEmployee) => {
     },
   ];
   const dbEmployee = await getDatabase('colaboradores');
-  const cursor = await dbEmployee.aggregate(agg);
+  const cursor = await dbEmployee.aggregate(agg).toArray();
 
-  return cursor.toArray().first();
+  return cursor.first();
 };
 
 const addGreenReceipt = async ({ query, headers, body }, response) => {

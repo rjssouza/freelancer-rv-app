@@ -26,9 +26,9 @@ const removeEmployee = async ({ query, headers, body }, response) => {
   validation
     .isRequired(id, 'id')
     .finalize();
+  const cursor = await dbEmployee.aggregate(agg).toArray();
 
-  const cursor = await dbEmployee.aggregate(agg);
-  cursor.toArray().forEach((element) => dbEmployee.deleteOne({ _id: element._id }));
+  cursor.forEach((element) => dbEmployee.deleteOne({ _id: element._id }));
 };
 
 async function main({ query, headers, body }, response) {
