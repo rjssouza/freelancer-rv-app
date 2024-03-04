@@ -23,6 +23,7 @@
     {
         "name": "fn_get_employee",
         "private": false,
+        "run_as_system": true,
         "disable_arg_logs": true
     }
 ]
