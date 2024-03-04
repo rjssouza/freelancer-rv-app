@@ -1,14 +1,1 @@
-[
-    {
-        "route": "/employee",
-        "http_method": "GET",
-        "function_name": "fn_get_employee",
-        "validation_method": "SECRET_AS_QUERY_PARAM",
-        "secret_name": "api_secret",
-        "respond_result": true,
-        "fetch_custom_user_data": false,
-        "create_user_on_auth": false,
-        "disabled": false,
-        "return_type": "JSON"
-    }
-]
+[]
