@@ -1,4 +1,4 @@
-const _ = require('lodash');
+const validate = () => context.functions.execute('fn_validate');
 
 const getDatabase = (dbCollection) => context.functions.execute('fn_get_database', dbCollection);
 
@@ -28,10 +28,14 @@ const getEmployee = async ({ query, headers, body }, response) => {
       },
     },
   ];
-  const dbEmployee = await getDatabase('colaboradores');
-  if (!employeeName && !id) { return dbEmployee.find({}); }
-  debug('Filtro', agg);
 
+  const validation = await validate();
+  validation
+    .conditionalRequired(id, employeeName, 'filtro')
+    .finalize();
+
+  debug('Filtro', agg);
+  const dbEmployee = await getDatabase('colaboradores');
   const result = await dbEmployee.aggregate(agg).toArray();
   debug('Resultado', result);
 

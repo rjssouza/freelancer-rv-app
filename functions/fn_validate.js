@@ -12,6 +12,12 @@ const validate = (dictionary = []) => {
   return {
     isRequired: (value, propriedade) => isRequired(value, propriedade, dictionary),
     isValidDate: (value, propriedade) => isValidDate(value, propriedade, dictionary),
+    conditionalRequired: (value1, value2, propriedade) => conditionalRequired(
+      value1,
+      value2,
+      propriedade,
+      dictionary,
+    ),
     finalize: () => {
       dictionary.forEach((test) => {
         test();
@@ -40,6 +46,20 @@ const isValidDate = (nome, propriedade, dictionary) => {
     .testAsync(nome)
     .catch((ex) => {
       throw Error(`O campo ${propriedade} é uma data inválida`);
+    });
+
+  dictionary.push(test);
+
+  return validate(dictionary);
+};
+
+const conditionalRequired = (value1, value2, propriedade, dictionary) => {
+  const value = value1 ?? value2;
+  const test = () => v8n()
+    .string()
+    .testAsync(value)
+    .catch((ex) => {
+      throw Error(`O campo ${propriedade} é obrigatório`);
     });
 
   dictionary.push(test);
