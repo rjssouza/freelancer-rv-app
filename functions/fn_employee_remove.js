@@ -12,7 +12,9 @@ const removeEmployee = async ({ query, headers, body }, response) => {
     .isRequired(id, "id")
     .finalize();
 
-  return dbColaboradores.remove({ _id: id });
+  const result = await dbColaboradores.deleteOne({ _id: id });
+
+  return result;
 };
 
 async function main({ query, headers, body }, response) {

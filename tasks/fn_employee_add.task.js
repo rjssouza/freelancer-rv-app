@@ -5,7 +5,7 @@ const fnEmployeeSave = require('../functions/fn_employee_save');
 main(async () => {
   const colaborador = {
     nomeCompleto: 'Robson Jesus de Souza',
-    dataNascimento: new Date(),
+    dataNascimento: new Date('1992-06-08'),
     documento: {
       nif: 314842535,
       niss: 12167098952,
