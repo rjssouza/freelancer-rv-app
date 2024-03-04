@@ -30,10 +30,12 @@ const getEmployee = async ({ query, headers, body }, response) => {
   ];
   debug('Headers', headers);
 
-  const validation = await validate();
-  validation
-    .conditionalRequired(id, employeeName, 'filtro')
-    .finalize();
+  if (!headers.ListAll) {
+    const validation = await validate();
+    validation
+      .conditionalRequired(id, employeeName, 'filtro')
+      .finalize();
+  }
 
   debug('Filtro', agg);
   const dbEmployee = await getDatabase('colaboradores');
