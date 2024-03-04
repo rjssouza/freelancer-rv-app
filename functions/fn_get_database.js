@@ -27,7 +27,7 @@ async function main(dbCollection) {
   return global.context.functions.execute(
     'fn_handler',
     getDatabase,
-    dbCollection
+    dbCollection,
   );
 }
 

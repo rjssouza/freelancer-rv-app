@@ -109,5 +109,5 @@ module.exports = {
   getDatabase,
   main,
   getResultsFromAggregate,
-  moveToAnother
+  moveToAnother,
 };

@@ -1,23 +1,10 @@
-const v8n = require("v8n");
-
-const extend = (fn) => {
-  v8n.extend({ fn });
-
-  return {
-    isRequired: (value, propriedade) => isRequired(value, propriedade, dictionary),
-    isValidDate: (value, propriedade) => isValidDate(value, propriedade, dictionary),
-    custom: (value, propriedade) => fn(value, propriedade, dictionary),
-    finalize: () => {
-      dictionary.forEach((test) => {
-        test();
-      })
-    }
-  }
-}
+/* eslint-disable no-use-before-define */
+/* eslint-disable no-restricted-globals */
+const v8n = require('v8n');
 
 const validate = (dictionary = []) => {
   function isDateValid() {
-    return value => !isNaN(new Date(value));
+    return (value) => !isNaN(new Date(value));
   }
 
   v8n.extend({ isDateValid });
@@ -28,17 +15,17 @@ const validate = (dictionary = []) => {
     finalize: () => {
       dictionary.forEach((test) => {
         test();
-      })
-    }
-  }
-}
+      });
+    },
+  };
+};
 
 const isRequired = (nome, propriedade, dictionary) => {
   const test = () => v8n()
     .string()
     .testAsync(nome)
-    .catch(ex => {
-      throw Error(`O campo ${propriedade} é obrigatório`)
+    .catch((ex) => {
+      throw Error(`O campo ${propriedade} é obrigatório`);
     });
 
   dictionary.push(test);
@@ -51,8 +38,8 @@ const isValidDate = (nome, propriedade, dictionary) => {
     .string()
     .isDateValid()
     .testAsync(nome)
-    .catch(ex => {
-      throw Error(`O campo ${propriedade} é uma data inválida`)
+    .catch((ex) => {
+      throw Error(`O campo ${propriedade} é uma data inválida`);
     });
 
   dictionary.push(test);

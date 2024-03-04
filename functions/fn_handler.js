@@ -1,7 +1,7 @@
 const winston = require('winston');
 const _ = require('lodash');
 const moment = require('moment-timezone');
-const path = require('path')
+const path = require('path');
 
 const handler = {
   async apply(target, thisArg, argumentsList) {
@@ -19,11 +19,11 @@ function bootstrapLogger(fn) {
   const { createLogger, format, transports } = winston;
   const {
     combine,
-    printf
+    printf,
   } = format;
 
   const myFormat = printf(
-    (info) => `${moment().toISOString()} [${info.label}] ${info.level}: ${info.message} ${JSON.stringify(info.metadata) !== '{}' ? `| ${JSON.stringify(info.metadata)}` : '' }`
+    (info) => `${moment().toISOString()} [${info.label}] ${info.level}: ${info.message} ${JSON.stringify(info.metadata) !== '{}' ? `| ${JSON.stringify(info.metadata)}` : ''}`,
   );
 
   const logLevel = global.context.values.get('LOG_LEVEL');
@@ -33,16 +33,16 @@ function bootstrapLogger(fn) {
       // format.label({ label: path.basename(process.mainModule.filename) }),
       format.label({ label: fn.name }),
       format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-      format.metadata({ fillExcept: ['message', 'level', 'timestamp', 'label'] })
+      format.metadata({ fillExcept: ['message', 'level', 'timestamp', 'label'] }),
     ),
     transports: [
       new transports.Console({
         format: format.combine(
-          myFormat
-        )
+          myFormat,
+        ),
       }),
     ],
-    exitOnError: false
+    exitOnError: false,
   });
 
   global.error = (text, object) => {
@@ -63,7 +63,7 @@ function bootstrapLogger(fn) {
 }
 
 function boostrapTimezone() {
-  moment.tz.setDefault("Europe/Lisbon");
+  moment.tz.setDefault('Europe/Lisbon');
 }
 
 async function main(fn, ...args) {

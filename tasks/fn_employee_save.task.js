@@ -10,7 +10,7 @@ main(async () => {
       nif: 314842535,
       niss: 12167098952,
       tituloResidencia: 'Q622R7565',
-      passaporte: 'GE997137'
+      passaporte: 'GE997137',
     },
     endereco: {
       distrito: 'Aveiro',
@@ -19,7 +19,7 @@ main(async () => {
       rua: 'Rua Zé Augusto',
       numero: 7,
       complemento: '1.7 A',
-      codigoPostal: '3800-111'
+      codigoPostal: '3800-111',
     },
     residenteNaoHabitual: {
       dataEmissao: new Date(),
@@ -28,18 +28,20 @@ main(async () => {
     contrato: {
       dataInicio: new Date(),
       valorHora: 180,
-      posicao: 'Desenvolvedor Senior'
+      posicao: 'Desenvolvedor Senior',
     },
     contato: {
       emailPessoal: 'robsonjesus908@gmail.com',
       emailInterno: 'robson.souza.ext@apside.com',
-      telefone: '+351910355998'
-    }
+      telefone: '+351910355998',
+    },
   };
 
   await fnEmployeeSave({
-    query: null, headers: null, body: {
-      text: () => JSON.stringify(colaborador)
-    }
+    query: null,
+    headers: null,
+    body: {
+      text: () => JSON.stringify(colaborador),
+    },
   }, null);
 });

@@ -9,15 +9,15 @@ const addEmployee = async ({ query, headers, body }, response) => {
   const colaborador = JSON.parse(body.text());
   const validation = await validate();
   validation
-    .isRequired(colaborador.nomeCompleto, "nome completo")
-    .isRequired(colaborador.dataNascimento, "data nascimento")
-    .isValidDate(colaborador.dataNascimento, "data nascimento")
+    .isRequired(colaborador.nomeCompleto, 'nome completo')
+    .isRequired(colaborador.dataNascimento, 'data nascimento')
+    .isValidDate(colaborador.dataNascimento, 'data nascimento')
     .finalize();
 
   const savedObject = await dbColaboradores.findOneAndUpdate(
-    { nomeCompleto: "Robson Jesus de Souza" },
+    { nomeCompleto: 'Robson Jesus de Souza' },
     { $set: colaborador },
-    { upsert: true, returnDocument: 'after', returnNewDocument: true }
+    { upsert: true, returnDocument: 'after', returnNewDocument: true },
   );
   debug('Object saved', savedObject);
   return savedObject;
@@ -27,7 +27,8 @@ async function main({ query, headers, body }, response) {
   return global.context.functions.execute(
     'fn_handler',
     addEmployee,
-    { query, headers, body }, response
+    { query, headers, body },
+    response,
   );
 }
 

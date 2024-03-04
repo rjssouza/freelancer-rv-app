@@ -18,5 +18,10 @@
         "mongodb-memory-server": "^9.1.6",
         "v8n": "^1.5.1",
         "winston": "^3.11.0"
+    },
+    "devDependencies": {
+        "eslint": "^8.57.0",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-plugin-import": "^2.29.1"
     }
 }
