@@ -13,8 +13,8 @@
     },
     {
         "route": "/employee",
-        "http_method": "POST",
-        "function_name": "fn_employee_save",
+        "http_method": "GET",
+        "function_name": "fn_employee_get",
         "validation_method": "SECRET_AS_QUERY_PARAM",
         "secret_name": "api_secret",
         "respond_result": true,
