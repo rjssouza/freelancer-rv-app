@@ -9,8 +9,8 @@ const getEmployee = async ({ query, headers, body }, response) => {
       $addFields: {
         searchId: {
           $convert: {
-            input: "$_id",
-            to: "string",
+            input: '$_id',
+            to: 'string',
           },
         },
       },
@@ -22,7 +22,7 @@ const getEmployee = async ({ query, headers, body }, response) => {
             searchId: id,
           },
           {
-            nomeCompleto: employeeName
+            nomeCompleto: employeeName,
           },
         ],
       },

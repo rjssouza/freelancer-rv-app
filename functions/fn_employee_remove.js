@@ -3,7 +3,7 @@ const validate = () => context.functions.execute('fn_validate');
 const getDatabase = (dbCollection) => context.functions.execute('fn_get_database', dbCollection);
 
 const getEmployee = (id) => context.functions.execute('fn_employee_get', {
-  query: { id }, headers: null, body: null,
+  query: { id, employeeName: '' }, headers: null, body: null,
 });
 
 const removeEmployee = async ({ query, headers, body }, response) => {
@@ -16,8 +16,7 @@ const removeEmployee = async ({ query, headers, body }, response) => {
   const cursor = await getEmployee(id);
 
   info('Retorno usuario para remover', cursor);
-  if (cursor.length <= 0)
-    return false;
+  if (cursor.length <= 0) { return false; }
 
   const employee = cursor[0];
 
