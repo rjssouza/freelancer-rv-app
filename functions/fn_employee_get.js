@@ -28,6 +28,7 @@ const getEmployee = async ({ query, headers, body }, response) => {
       },
     },
   ];
+  debug('Headers', headers);
 
   const validation = await validate();
   validation
