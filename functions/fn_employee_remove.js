@@ -12,14 +12,16 @@ const removeEmployee = async ({ query, headers, body }, response) => {
   validation
     .isRequired(id, 'id')
     .finalize();
-  const dbEmployee = await getDatabase('colaboradores');
+
   const cursor = await getEmployee(id);
+
   info('Retorno usuario para remover', cursor);
   if (cursor.length <= 0)
     return false;
 
   const employee = cursor[0];
-  debug(`Colaborador de id: ${id} deletado com sucesso`);
+
+  const dbEmployee = await getDatabase('colaboradores');
 
   return dbEmployee.deleteOne({ _id: employee._id });
 };
