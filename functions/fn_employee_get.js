@@ -29,7 +29,7 @@ const getEmployee = async ({ query, headers, body }, response) => {
     },
   ];
   const dbEmployee = await getDatabase('colaboradores');
-  if (!nomeCompleto && !id) { return dbEmployee.find({}); }
+  if (!employeeName && !id) { return dbEmployee.find({}); }
   debug('Filtro', agg);
 
   const result = await dbEmployee.aggregate(agg).toArray();
