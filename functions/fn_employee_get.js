@@ -3,7 +3,6 @@ const validate = () => context.functions.execute('fn_validate');
 const getDatabase = (dbCollection) => context.functions.execute('fn_get_database', dbCollection);
 
 const getEmployee = async ({ query, headers, body }, response) => {
-  debugger;
   const { employeeName, id } = query;
   const agg = [
     {
