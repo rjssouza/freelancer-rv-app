@@ -22,9 +22,6 @@ async function getDatabase(dbCollection) {
 
         return savedObject;
       },
-      writable: true,
-      configurable: true,
-      enumerable: false,
     });
 
     collection = {
