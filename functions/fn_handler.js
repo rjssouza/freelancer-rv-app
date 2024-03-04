@@ -1,15 +1,14 @@
 const winston = require('winston');
 const _ = require('lodash');
 const moment = require('moment-timezone');
-const path = require('path');
 
 const handler = {
   async apply(target, thisArg, argumentsList) {
     try {
-      global.debug('Chamando função');
+      debug('Chamando função');
       return await target(...argumentsList);
     } catch (err) {
-      global.error(`Exception occurred while executing function: ${err}`);
+      error('Exception occurred while executing function', err);
       throw err;
     }
   },
