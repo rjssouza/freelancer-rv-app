@@ -31,7 +31,7 @@ const getEmployee = async ({ query, headers, body }, response) => {
 
   debug('Header', headers);
 
-  if (!headers.ListAll[0]) {
+  if (!headers.Listall[0]) {
     const validation = await validate();
     validation
       .conditionalRequired(id, employeeName, 'filtro')
