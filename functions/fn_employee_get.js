@@ -4,6 +4,7 @@ const getDatabase = (dbCollection) => context.functions.execute('fn_get_database
 
 const getEmployee = async ({ query, headers, body }, response) => {
 	const { nome } = query;
+	info(nome)
 	const dbColaboradores = await getDatabase('colaboradores');
 	if (!nome)
 		return dbColaboradores.find({ nomeCompleto: nome });
