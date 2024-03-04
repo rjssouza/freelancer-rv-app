@@ -31,5 +31,11 @@
         "private": false,
         "run_as_system": true,
         "disable_arg_logs": true
-    }
+    },
+    {
+        "name": "fn_green_receipt_save",
+        "private": false,
+        "run_as_system": true,
+        "disable_arg_logs": true
+    }, 
 ]

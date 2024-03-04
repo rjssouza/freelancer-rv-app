@@ -1,16 +1,18 @@
+const { BSON } = require('bson');
+
 const validate = () => context.functions.execute('fn_validate');
 
 const getDatabase = (dbCollection) => context.functions.execute('fn_get_database', dbCollection);
 
 const removeEmployee = async ({ query, headers, body }, response) => {
   const { id } = query;
-  const dbColaboradores = await getDatabase('colaboradores');
+  const dbEmployee = await getDatabase('colaboradores');
   const validation = await validate();
   validation
     .isRequired(id, 'id')
     .finalize();
 
-  return dbColaboradores.deleteOne({ _id: new BSON.ObjectId(id) });
+  return dbEmployee.deleteOne({ _id: new BSON.ObjectId(id) });
 };
 
 async function main({ query, headers, body }, response) {

@@ -23,7 +23,7 @@ const validate = (dictionary = []) => {
 const isRequired = (nome, propriedade, dictionary) => {
   const test = () => v8n()
     .string()
-    .testAsync(nome)
+    .testAsync(nome?.toString())
     .catch((ex) => {
       throw Error(`O campo ${propriedade} é obrigatório`);
     });

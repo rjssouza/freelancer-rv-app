@@ -7,6 +7,7 @@
         "fn_employee_save": "node ./tasks/fn_employee_save.task.js --env=development",
         "fn_employee_get": "node ./tasks/fn_employee_get.task.js --env=development",
         "fn_employee_remove": "node ./tasks/fn_employee_remove.task.js --env=development",
+        "fn_green_receipt_save": "node ./tasks/fn_green_receipt_save.task.js --env=development",
         "test": "jest --runInBand --detectOpenHandles --forceExit"
     },
     "dependencies": {

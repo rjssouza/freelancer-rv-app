@@ -3,7 +3,7 @@ const { main } = require('../init');
 const fnEmployeeSave = require('../functions/fn_employee_save');
 
 main(async () => {
-  const colaborador = {
+  const employee = {
     nomeCompleto: 'Robson Jesus de Souza',
     dataNascimento: new Date('1992-06-08'),
     documento: {
@@ -41,7 +41,7 @@ main(async () => {
     query: null,
     headers: null,
     body: {
-      text: () => JSON.stringify(colaborador),
+      text: () => JSON.stringify(employee),
     },
   }, null);
 });

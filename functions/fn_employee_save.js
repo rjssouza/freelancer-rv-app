@@ -5,21 +5,22 @@ const validate = () => context.functions.execute('fn_validate');
 const getDatabase = (dbCollection) => context.functions.execute('fn_get_database', dbCollection);
 
 const addEmployee = async ({ query, headers, body }, response) => {
-  const dbColaboradores = await getDatabase('colaboradores');
-  const colaborador = JSON.parse(body.text());
+  const dbEmployee = await getDatabase('colaboradores');
+  const employee = JSON.parse(body.text());
   const validation = await validate();
   validation
-    .isRequired(colaborador.nomeCompleto, 'nome completo')
-    .isRequired(colaborador.dataNascimento, 'data nascimento')
-    .isValidDate(colaborador.dataNascimento, 'data nascimento')
+    .isRequired(employee.nomeCompleto, 'Nome Completo')
+    .isRequired(employee.dataNascimento, 'Data Nascimento')
+    .isRequired(employee.documento.nif, 'NIF')
+    .isValidDate(employee.dataNascimento, 'Data Nascimento')
     .finalize();
 
-  const savedObject = await dbColaboradores.findOneAndUpdate(
+  const savedObject = await dbEmployee.findOneAndUpdateWithLogs(
     { nomeCompleto: 'Robson Jesus de Souza' },
-    { $set: colaborador },
+    { $set: employee },
     { upsert: true, returnDocument: 'after', returnNewDocument: true },
   );
-  debug('Object saved', savedObject);
+
   return savedObject;
 };
 

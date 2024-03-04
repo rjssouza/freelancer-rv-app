@@ -10,12 +10,26 @@ async function getDatabase(dbCollection) {
   let collection = collectionDictionary.find((c) => c.name === dbCollection);
 
   if (!collection) {
+    const tmpCollection = global.context.services
+      .get(serviceName)
+      .db(dbName)
+      .collection(dbCollection);
+
+    Object.defineProperty(tmpCollection, 'findOneAndUpdateWithLogs', {
+      async value(arg1, arg2, arg3) {
+        const savedObject = await tmpCollection.findOneAndUpdate(arg1, arg2, arg3);
+        debug('Object saved', savedObject);
+
+        return savedObject;
+      },
+      writable: true,
+      configurable: true,
+      enumerable: false,
+    });
+
     collection = {
       name: dbCollection,
-      col: global.context.services
-        .get(serviceName)
-        .db(dbName)
-        .collection(dbCollection),
+      col: tmpCollection,
     };
     collectionDictionary.push(collection);
   }
