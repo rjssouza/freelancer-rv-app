@@ -1,9 +1,21 @@
 const validate = () => context.functions.execute('fn_validate');
 
+const validateFilter = async (employeeName, id, headers) => {
+  debug('Header', headers);
+
+  if (!headers.Listall[0]) {
+    const validation = await validate();
+    validation
+      .conditionalRequired(id, employeeName, 'filtro')
+      .finalize();
+  }
+};
+
 const getDatabase = (dbCollection) => context.functions.execute('fn_get_database', dbCollection);
 
 const getEmployee = async ({ query, headers, body }, response) => {
   const { employeeName, id } = query;
+  await validateFilter(employeeName, id, headers);
   const agg = [
     {
       $addFields: {
@@ -28,16 +40,6 @@ const getEmployee = async ({ query, headers, body }, response) => {
       },
     },
   ];
-
-  debug('Header', headers);
-
-  if (!headers.Listall[0]) {
-    const validation = await validate();
-    validation
-      .conditionalRequired(id, employeeName, 'filtro')
-      .finalize();
-  }
-
   debug('Filtro', agg);
   const dbEmployee = await getDatabase('colaboradores');
   const result = await dbEmployee.aggregate(agg).toArray();
