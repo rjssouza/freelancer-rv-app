@@ -3,12 +3,12 @@ const _ = require('lodash');
 const getDatabase = (dbCollection) => context.functions.execute('fn_get_database', dbCollection);
 
 const getEmployee = async ({ query, headers, body }, response) => {
-	const { nome } = query;
-	info(nome)
+	const { nomeCompleto } = query;
+	info(nomeCompleto)
 	const dbColaboradores = await getDatabase('colaboradores');
-	if (!nome)
-		return dbColaboradores.find({ nomeCompleto: nome });
-	return dbColaboradores.find({ nomeCompleto: nome });
+	if (!nomeCompleto)
+		return dbColaboradores.find({});
+	return dbColaboradores.find({ nomeCompleto });
 };
 
 async function main({ query, headers, body }, response) {

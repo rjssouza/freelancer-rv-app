@@ -1,6 +1,6 @@
 const _ = require('lodash');
-const { main, getDatabase } = require('../init');
-const fnAddEmployee = require('../functions/fn_add_employee');
+const { main } = require('../init');
+const fnEmployeeSave = require('../functions/fn_employee_save');
 
 main(async () => {
   const colaborador = {
@@ -37,7 +37,7 @@ main(async () => {
     }
   };
 
-  await fnAddEmployee({
+  await fnEmployeeSave({
     query: null, headers: null, body: {
       text: () => JSON.stringify(colaborador)
     }
