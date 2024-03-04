@@ -1,5 +1,6 @@
 /* eslint-disable global-require */
 /* eslint-disable import/no-dynamic-require */
+const LOG_LEVEL = 'LOG_LEVEL';
 const _ = require('lodash');
 const process = require('process');
 const { MongoClient } = require('mongodb');
@@ -64,6 +65,7 @@ global.context = {
   },
   values: {
     get: (valueName) => {
+      if (valueName === LOG_LEVEL) return 'debug';
       const valueObj = require(`./values/${valueName}`);
 
       return valueObj.value;
