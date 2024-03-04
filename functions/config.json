@@ -21,7 +21,7 @@
         "run_as_system": true
     },
     {
-        "name": "fn_get_employee",
+        "name": "fn_employee_get",
         "private": false,
         "run_as_system": true,
         "disable_arg_logs": true
