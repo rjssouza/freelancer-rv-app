@@ -1,13 +1,28 @@
-const { BSON } = require('bson');
-
 const validate = () => context.functions.execute('fn_validate');
 
 const getDatabase = (dbCollection) => context.functions.execute('fn_get_database', dbCollection);
 
 const getEmployee = async (idEmployee) => {
+  const agg = [
+    {
+      $addFields: {
+        searchId: {
+          $convert: {
+            input: '$_id',
+            to: 'string',
+          },
+        },
+      },
+    }, {
+      $match: {
+        searchId: idEmployee,
+      },
+    },
+  ];
   const dbEmployee = await getDatabase('colaboradores');
+  const cursor = await dbEmployee.aggregate(agg);
 
-  return dbEmployee.findOne({ _id: new BSON.ObjectId(idEmployee) });
+  return cursor.toArray().first();
 };
 
 const addGreenReceipt = async ({ query, headers, body }, response) => {
