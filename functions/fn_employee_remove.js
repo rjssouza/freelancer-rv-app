@@ -1,7 +1,3 @@
-const _ = require('lodash');
-// eslint-disable-next-line import/no-extraneous-dependencies
-const { ObjectId } = require('mongodb');
-
 const validate = () => context.functions.execute('fn_validate');
 
 const getDatabase = (dbCollection) => context.functions.execute('fn_get_database', dbCollection);
@@ -14,7 +10,7 @@ const removeEmployee = async ({ query, headers, body }, response) => {
     .isRequired(id, 'id')
     .finalize();
 
-  return dbColaboradores.deleteOne({ _id: new ObjectId(id) });
+  return dbColaboradores.deleteOne({ _id: new BSON.ObjectId(id) });
 };
 
 async function main({ query, headers, body }, response) {
