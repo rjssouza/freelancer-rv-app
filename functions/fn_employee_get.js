@@ -16,6 +16,11 @@ const getDatabase = (dbCollection) => context.functions.execute('fn_get_database
 const getEmployee = async ({ query, headers, body }, response) => {
   const { employeeName, id } = query;
   await validateFilter(employeeName, id, headers);
+  const dbEmployee = await getDatabase('colaboradores');
+  if (!headers.Listall[0]) {
+    return dbEmployee.find({}).toArray();
+  }
+
   const agg = [
     {
       $addFields: {
@@ -41,7 +46,6 @@ const getEmployee = async ({ query, headers, body }, response) => {
     },
   ];
   debug('Filtro', agg);
-  const dbEmployee = await getDatabase('colaboradores');
   const result = await dbEmployee.aggregate(agg).toArray();
   debug('Resultado', result);
 
