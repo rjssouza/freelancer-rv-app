@@ -2,28 +2,9 @@ const validate = () => context.functions.execute('fn_validate');
 
 const getDatabase = (dbCollection) => context.functions.execute('fn_get_database', dbCollection);
 
-const getEmployee = async (idEmployee) => {
-  const agg = [
-    {
-      $addFields: {
-        searchId: {
-          $convert: {
-            input: '$_id',
-            to: 'string',
-          },
-        },
-      },
-    }, {
-      $match: {
-        searchId: idEmployee,
-      },
-    },
-  ];
-  const dbEmployee = await getDatabase('colaboradores');
-  const cursor = await dbEmployee.aggregate(agg).toArray();
-
-  return cursor.first();
-};
+const getEmployee = (id) => context.functions.execute('fn_employee_get', {
+  query: { id }, headers: null, body: null,
+});
 
 const addGreenReceipt = async ({ query, headers, body }, response) => {
   const dbGreenReceipts = await getDatabase('recibos-verdes');

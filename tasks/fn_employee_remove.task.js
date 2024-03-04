@@ -4,6 +4,6 @@ const fnEmployeeRemove = require('../functions/fn_employee_remove');
 
 main(async () => {
   await fnEmployeeRemove({
-    query: { id: '65e60bf3af3d646b35c40ae6' }, headers: null, body: null,
+    query: { id: '65e61bcaaf3d646b35ca1a3c' }, headers: null, body: null,
   }, null);
 });

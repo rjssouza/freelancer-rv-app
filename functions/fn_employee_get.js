@@ -3,12 +3,40 @@ const _ = require('lodash');
 const getDatabase = (dbCollection) => context.functions.execute('fn_get_database', dbCollection);
 
 const getEmployee = async ({ query, headers, body }, response) => {
-  const { nomeCompleto } = query;
+  const { nomeCompleto, id } = query;
   debug(`Filtro: ${nomeCompleto}`);
+  const agg = [
+    {
+      $addFields: {
+        searchId: {
+          $convert: {
+            input: "$_id",
+            to: "string",
+          },
+        },
+      },
+    },
+    {
+      $match: {
+        $or: [
+          {
+            searchId: id,
+          },
+          {
+            nomeCompleto
+          },
+        ],
+      },
+    },
+  ];
   const dbEmployee = await getDatabase('colaboradores');
-  if (!nomeCompleto) { return dbEmployee.find({}); }
+  if (!nomeCompleto && !id) { return dbEmployee.find({}); }
+  debug('Filtro', agg);
 
-  return dbEmployee.find({ nomeCompleto });
+  const result = await dbEmployee.aggregate(agg).toArray();
+  debug('Resultado', result);
+
+  return result;
 };
 
 async function main({ query, headers, body }, response) {
