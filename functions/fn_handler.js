@@ -1,6 +1,7 @@
 const winston = require('winston');
 const _ = require('lodash');
 const moment = require('moment-timezone');
+const path = require('path')
 
 const handler = {
   async apply(target, thisArg, argumentsList) {
@@ -22,36 +23,42 @@ function bootstrapLogger(fn) {
   } = format;
 
   const myFormat = printf(
-    ({
-      level,
-      message,
-    }) => `${moment().toISOString()} [${fn.name}] ${level}: ${message}`
+    (info) => `${moment().toISOString()} [${info.label}] ${info.level}: ${info.message} ${JSON.stringify(info.metadata) !== '{}' ? `| ${JSON.stringify(info.metadata)}` : '' }`
   );
 
   const logLevel = global.context.values.get('LOG_LEVEL');
   const logger = createLogger({
     level: logLevel,
+    format: combine(
+      // format.label({ label: path.basename(process.mainModule.filename) }),
+      format.label({ label: fn.name }),
+      format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+      format.metadata({ fillExcept: ['message', 'level', 'timestamp', 'label'] })
+    ),
     transports: [
       new transports.Console({
-        format: combine(myFormat),
+        format: format.combine(
+          myFormat
+        )
       }),
     ],
+    exitOnError: false
   });
 
-  global.error = (text) => {
-    logger.error(`${text}`);
+  global.error = (text, object) => {
+    logger.error(`${text}`, object);
   };
 
-  global.debug = (text) => {
-    logger.debug(`${text}`);
+  global.debug = (text, object) => {
+    logger.debug(`${text}`, object);
   };
 
-  global.info = (text) => {
-    logger.info(`${text}`);
+  global.info = (text, object) => {
+    logger.info(`${text}`, object);
   };
 
-  global.warn = (text) => {
-    logger.warn(`${text}`);
+  global.warn = (text, object) => {
+    logger.warn(`${text}`, object);
   };
 }
 

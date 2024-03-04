@@ -7,8 +7,6 @@ const getDatabase = (dbCollection) => context.functions.execute('fn_get_database
 const addEmployee = async ({ query, headers, body }, response) => {
   const dbColaboradores = await getDatabase('colaboradores');
   const colaborador = JSON.parse(body.text());
-  info("Request:", colaborador);
-
   const validation = await validate();
   validation
     .isRequired(colaborador.nomeCompleto, "nome completo")
@@ -16,14 +14,13 @@ const addEmployee = async ({ query, headers, body }, response) => {
     .isValidDate(colaborador.dataNascimento, "data nascimento")
     .finalize();
 
-  const id = await dbColaboradores.findOneAndUpdate(
+  const savedObject = await dbColaboradores.findOneAndUpdate(
     { nomeCompleto: "Robson Jesus de Souza" },
     { $set: colaborador },
     { upsert: true, returnDocument: 'after', returnNewDocument: true }
   );
-  info("Request body:", id);
-
-  return id;
+  debug('Object saved', savedObject);
+  return savedObject;
 };
 
 async function main({ query, headers, body }, response) {
