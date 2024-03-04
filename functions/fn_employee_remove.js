@@ -14,6 +14,7 @@ const removeEmployee = async ({ query, headers, body }, response) => {
     .finalize();
   const dbEmployee = await getDatabase('colaboradores');
   const cursor = await getEmployee(id);
+  info('Retorno usuario para remover', cursor);
   if (cursor.length <= 0)
     return false;
 
