@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const { ObjectId } = require('mongodb');
 
 const validate = () => context.functions.execute('fn_validate');
 
@@ -12,9 +13,7 @@ const removeEmployee = async ({ query, headers, body }, response) => {
     .isRequired(id, "id")
     .finalize();
 
-  const result = await dbColaboradores.deleteOne({ _id: id });
-
-  return result;
+  return dbColaboradores.deleteOne({ _id: new ObjectId(id) });
 };
 
 async function main({ query, headers, body }, response) {
