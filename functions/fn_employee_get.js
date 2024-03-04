@@ -28,7 +28,6 @@ const getEmployee = async ({ query, headers, body }, response) => {
       },
     },
   ];
-  debug('Headers', headers);
 
   if (!headers.ListAll) {
     const validation = await validate();
