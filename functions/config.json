@@ -5,6 +5,11 @@
         "run_as_system": true
     },
     {
+        "name": "fn_validate",
+        "private": true,
+        "disable_arg_logs": true
+    },
+    {
         "name": "fn_add_employee",
         "private": false,
         "run_as_system": true,
@@ -16,8 +21,8 @@
         "run_as_system": true
     },
     {
-        "name": "fn_validate",
-        "private": true,
+        "name": "fn_get_employee",
+        "private": false,
         "disable_arg_logs": true
     }
 ]
