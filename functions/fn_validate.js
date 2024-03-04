@@ -1,5 +1,20 @@
 const v8n = require("v8n");
 
+const extend = (fn) => {
+  v8n.extend({ fn });
+
+  return {
+    isRequired: (value, propriedade) => isRequired(value, propriedade, dictionary),
+    isValidDate: (value, propriedade) => isValidDate(value, propriedade, dictionary),
+    custom: (value, propriedade) => fn(value, propriedade, dictionary),
+    finalize: () => {
+      dictionary.forEach((test) => {
+        test();
+      })
+    }
+  }
+}
+
 const validate = (dictionary = []) => {
   function isDateValid() {
     return value => !isNaN(new Date(value));
