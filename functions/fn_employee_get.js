@@ -3,8 +3,7 @@ const _ = require('lodash');
 const getDatabase = (dbCollection) => context.functions.execute('fn_get_database', dbCollection);
 
 const getEmployee = async ({ query, headers, body }, response) => {
-  const { nomeCompleto, id } = query;
-  debug(`Filtro: ${nomeCompleto}`);
+  const { employeeName, id } = query;
   const agg = [
     {
       $addFields: {
@@ -23,7 +22,7 @@ const getEmployee = async ({ query, headers, body }, response) => {
             searchId: id,
           },
           {
-            nomeCompleto
+            nomeCompleto: employeeName
           },
         ],
       },
