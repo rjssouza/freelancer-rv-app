@@ -21,7 +21,6 @@ const addGreenReceipt = async ({ query, headers, body }, response) => {
     .isRequired(employee, 'Colaborador')
     .isRequired(greenReceipt.dataEmissao, 'Data Emissão')
     .isRequired(greenReceipt.anexo, 'Anexo')
-    .isValidDate(greenReceipt.dataEmissao, 'Data Emissão')
     .finalize();
 
   greenReceipt.colaborador = employee;
