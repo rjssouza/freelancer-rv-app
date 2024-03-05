@@ -1,24 +1,28 @@
 const validate = () => context.functions.execute('fn_validate');
 
-const validateFilter = async (employeeName, id, headers) => {
+const validateFilter = async (filter, headers) => {
   debug('Header', headers);
 
   if (!headers?.Listall || headers?.Listall[0] !== 'true') {
     const validation = await validate();
     validation
-      .conditionalRequired('filtro', id, employeeName)
+      .conditionalRequired('filtro', filter.id, filter.employeeName, filter.issueDate)
       .finalize();
   }
 };
 
 const getDatabase = (dbCollection) => context.functions.execute('fn_get_database', dbCollection);
 
-const getEmployee = async ({ query, headers, body }, response) => {
-  const { employeeName, id } = query;
-  await validateFilter(employeeName, id, headers);
-  const dbEmployee = await getDatabase('colaboradores');
+const getGreenReceipt = async ({ query, headers, body }, response) => {
+  const { id, employeeName, issueDate } = query;
+  await validateFilter({
+    id,
+    employeeName,
+    issueDate,
+  }, headers);
+  const dbGreenReceipt = await getDatabase('recibos-verdes');
   if (headers?.Listall && headers?.Listall[0] === 'true') {
-    return dbEmployee.find({}).toArray();
+    return dbGreenReceipt.find({}).toArray();
   }
 
   const agg = [
@@ -39,14 +43,17 @@ const getEmployee = async ({ query, headers, body }, response) => {
             searchId: id ?? '',
           },
           {
-            nomeCompleto: employeeName ?? '',
+            'colaborador.nomeCompleto': employeeName ?? '',
+          },
+          {
+            dataEmissao: issueDate ?? '',
           },
         ],
       },
     },
   ];
   debug('Filtro', agg);
-  const result = await dbEmployee.aggregate(agg).toArray();
+  const result = await dbGreenReceipt.aggregate(agg).toArray();
   debug('Resultado', result);
 
   return result;
@@ -55,13 +62,13 @@ const getEmployee = async ({ query, headers, body }, response) => {
 async function main({ query, headers, body }, response) {
   return global.context.functions.execute(
     'fn_handler',
-    getEmployee,
+    getGreenReceipt,
     { query, headers, body },
     response,
   );
 }
 
-// fn_add_employee
+// fn_add_GreenReceipt
 exports = main;
 
 if (typeof module !== 'undefined') {
