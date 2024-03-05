@@ -5,7 +5,12 @@ const _ = require('lodash');
 
 const validate = (dictionary = []) => {
   function isDateValid() {
-    return (value) => !isNaN(new Date(value.trim()));
+    return (value) => {
+      const dateTest = new Date(value.trim());
+      debug(dateTest);
+
+      return !isNaN(dateTest);
+    };
   }
 
   v8n.extend({ isDateValid });
