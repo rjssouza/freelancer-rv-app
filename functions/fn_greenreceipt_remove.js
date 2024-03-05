@@ -2,7 +2,7 @@ const validate = () => context.functions.execute('fn_validate');
 
 const getDatabase = (dbCollection) => context.functions.execute('fn_get_database', dbCollection);
 
-const getGreenReceipt = (id) => context.functions.execute('fn_greenreceipt_get', {
+const getGreenReceipt = (id) => context.functions.execute('fn_green_receipt_get', {
   query: { id }, headers: null, body: null,
 });
 
