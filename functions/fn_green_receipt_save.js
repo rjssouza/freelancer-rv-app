@@ -23,7 +23,7 @@ const addGreenReceipt = async ({ query, headers, body }, response) => {
   greenReceipt.colaborador = employee;
 
   const savedObject = await dbGreenReceipts.findOneAndUpdateWithLogs(
-    { dataEmissao: greenReceipt.dataEmissao },
+    { dataEmissao: greenReceipt.dataEmissao, 'colaborador.id': idEmployee },
     { $set: greenReceipt },
     { upsert: true, returnDocument: 'after', returnNewDocument: true },
   );
