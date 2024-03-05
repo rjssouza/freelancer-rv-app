@@ -2,9 +2,13 @@ const validate = () => context.functions.execute('fn_validate');
 
 const getDatabase = (dbCollection) => context.functions.execute('fn_get_database', dbCollection);
 
-const getEmployee = (id) => context.functions.execute('fn_employee_get', {
-  query: { id }, headers: null, body: null,
-});
+const getEmployee = async (id) => {
+  const employeeList = await context.functions.execute('fn_employee_get', {
+    query: { id }, headers: null, body: null,
+  });
+
+  return employeeList.length > 0 ? employeeList[0] : null;
+};
 
 const addGreenReceipt = async ({ query, headers, body }, response) => {
   const dbGreenReceipts = await getDatabase('recibos-verdes');
@@ -23,7 +27,7 @@ const addGreenReceipt = async ({ query, headers, body }, response) => {
   greenReceipt.colaborador = employee;
 
   const savedObject = await dbGreenReceipts.findOneAndUpdateWithLogs(
-    { dataEmissao: greenReceipt.dataEmissao, 'colaborador._id': idEmployee },
+    { 'colaborador._id': employee._id, dataEmissao: greenReceipt.dataEmissao },
     { $set: greenReceipt },
     { upsert: true, returnDocument: 'after', returnNewDocument: true },
   );

@@ -13,7 +13,7 @@ main(async () => {
 
   await fnGreenReceiptSave({
     query: {
-      idEmployee: '65e5f2d6af3d646b35b9fa5d',
+      idEmployee: '65e6f15caf3d646b3506d3ca',
     },
     headers: null,
     body: {
