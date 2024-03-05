@@ -19,34 +19,40 @@ const validate = (dictionary = []) => {
       ...args,
     ),
     finalize: () => {
-      dictionary.forEach(async (test) => {
-        await test();
+      dictionary.forEach((test) => {
+        test();
       });
     },
   };
 };
 
-const isRequired = (nome, property, dictionary) => {
-  const test = () => v8n()
-    .string()
-    .testAsync(nome?.toString())
-    .catch((ex) => {
+const isRequired = (value, property, dictionary) => {
+  const test = () => {
+    try {
+      v8n()
+        .string()
+        .test(value?.toString());
+    } catch {
       throw Error(`O campo ${property} é obrigatório`);
-    });
+    }
+  };
 
   dictionary.push(test);
 
   return validate(dictionary);
 };
 
-const isValidDate = (nome, property, dictionary) => {
-  const test = () => v8n()
-    .string()
-    .isDateValid()
-    .testAsync(nome)
-    .catch((ex) => {
+const isValidDate = (value, property, dictionary) => {
+  const test = () => {
+    try {
+      v8n()
+        .string()
+        .isDateValid()
+        .test(value);
+    } catch {
       throw Error(`O campo ${property} é uma data inválida`);
-    });
+    }
+  };
 
   dictionary.push(test);
 
@@ -55,12 +61,15 @@ const isValidDate = (nome, property, dictionary) => {
 
 const conditionalRequired = (property, dictionary, ...args) => {
   const value = _.findLast(args, (o) => o && o !== '' && o !== null);
-  const test = () => v8n()
-    .string()
-    .testAsync(value)
-    .catch((ex) => {
+  const test = () => {
+    try {
+      v8n()
+        .string()
+        .test(value);
+    } catch {
       throw Error(`O campo ${property} é obrigatório`);
-    });
+    }
+  };
 
   dictionary.push(test);
 

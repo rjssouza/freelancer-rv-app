@@ -3,7 +3,7 @@ const fnGreenReceiptSave = require('../functions/fn_green_receipt_save');
 
 main(async () => {
   const greenReceipt = {
-    dataEmissao: '2023-02-29',
+    dataEmissao: '2024-02-29',
     valorBase: 1000.10,
     valorIva: 248.40,
     valorIrs: 216.00,
