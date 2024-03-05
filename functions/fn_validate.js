@@ -5,10 +5,7 @@ const _ = require('lodash');
 
 const validate = (dictionary = []) => {
   function isDateValid() {
-    return (value) => {
-      debug(value);
-      return !isNaN(new Date(value.trim()));
-    };
+    return (value) => !isNaN(new Date(value.trim()));
   }
 
   v8n.extend({ isDateValid });
@@ -22,8 +19,8 @@ const validate = (dictionary = []) => {
       ...args,
     ),
     finalize: () => {
-      dictionary.forEach((test) => {
-        test();
+      dictionary.forEach(async (test) => {
+        await test();
       });
     },
   };
