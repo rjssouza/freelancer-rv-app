@@ -54,7 +54,7 @@ const isValidDate = (nome, property, dictionary) => {
 };
 
 const conditionalRequired = (property, dictionary, ...args) => {
-  const value = _.findLast(args, (o) => o !== '');
+  const value = _.findLast(args, (o) => o && o !== '' && o !== null);
   const test = () => v8n()
     .string()
     .testAsync(value)
