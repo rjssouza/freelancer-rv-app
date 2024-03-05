@@ -3,7 +3,7 @@ const validate = () => context.functions.execute('fn_validate');
 const validateFilter = async (employeeName, id, headers) => {
   debug('Header', headers);
 
-  if (headers?.Listall[0] !== 'true') {
+  if (headers?.Listall && headers?.Listall[0] !== 'true') {
     const validation = await validate();
     validation
       .conditionalRequired(id, employeeName, 'filtro')
@@ -17,7 +17,7 @@ const getEmployee = async ({ query, headers, body }, response) => {
   const { employeeName, id } = query;
   await validateFilter(employeeName, id, headers);
   const dbEmployee = await getDatabase('colaboradores');
-  if (headers?.Listall[0] === 'true') {
+  if (headers?.Listall && headers?.Listall[0] === 'true') {
     return dbEmployee.find({}).toArray();
   }
 
