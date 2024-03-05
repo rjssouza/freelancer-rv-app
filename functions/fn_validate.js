@@ -7,7 +7,7 @@ const validate = (dictionary = []) => {
   function isDateValid() {
     return (value) => {
       debug(value);
-      return !isNaN(new Date(value));
+      return !isNaN(new Date(value.trim()));
     };
   }
 
