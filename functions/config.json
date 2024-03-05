@@ -43,5 +43,11 @@
         "private": false,
         "run_as_system": true,
         "disable_arg_logs": true
+    },
+    {
+        "name": "fn_greenreceipt_remove",
+        "private": false,
+        "run_as_system": true,
+        "disable_arg_logs": true
     }    
 ]
